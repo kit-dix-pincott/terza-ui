@@ -5,6 +5,8 @@ allowBuilds:
   lmdb: false
   msgpackr-extract: false
   '@parcel/watcher': false
+  '@swc/core': false
+  unrs-resolver: false
 minimumReleaseAgeExclude:
   - '@nx/angular@24.0.3'
   - '@nx/devkit@24.0.3'

@@ -43,6 +43,11 @@
           "optimization": false,
           "extractLicenses": false,
           "sourceMap": true
+        },
+        "packaging": {
+          "tsConfig": "apps/docs/tsconfig.packaging.json",
+          "outputPath": "dist/packaging/docs",
+          "outputHashing": "all"
         }
       }
     },

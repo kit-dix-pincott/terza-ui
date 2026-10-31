@@ -2,8 +2,22 @@
   "name": "@terza-ui/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve docs",
+    "storybook": "nx storybook ui",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "build": "nx run-many -t build",
+    "test-storybook": "nx test-storybook ui",
+    "e2e": "nx e2e docs-e2e",
+    "verify:packaging": "nx run docs:build:packaging && npm pack --dry-run ./dist/libs/ui",
+    "e2e:flake-log": "node tools/scripts/e2e-flake-log.mjs",
+    "e2e:coverage-report": "node tools/scripts/e2e-coverage-report.mjs"
+  },
   "private": true,
+  "engines": {
+    "node": ">=26"
+  },
   "dependencies": {
     "@angular/common": "~22.2.0",
     "@angular/compiler": "~22.2.0",
@@ -20,6 +34,7 @@
     "@angular/cli": "~22.2.0",
     "@angular/compiler-cli": "~22.2.0",
     "@angular/language-service": "~22.2.0",
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^9.8.0",
     "@nx/angular": "24.0.3",
     "@nx/devkit": "24.0.3",
@@ -33,16 +48,24 @@
     "@playwright/test": "^1.37.0",
     "@schematics/angular": "~22.2.0",
     "@storybook/angular": "^10.6.2",
+    "@storybook/test-runner": "^0.26.0",
     "@swc/helpers": "~0.5.18",
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.6.6",
     "@typescript-eslint/utils": "^8.58.0",
+    "@vitest/coverage-v8": "4.1.12",
     "angular-eslint": "^22.5.0",
     "autoprefixer": "^10.4.0",
+    "axe-playwright": "^2.2.2",
+    "concurrently": "^10.0.6",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-jsdoc": "^65.4.2",
     "eslint-plugin-playwright": "^1.6.2",
+    "eslint-plugin-tsdoc": "^0.5.4",
+    "http-server": "^14.1.1",
     "jsdom": "^27.1.0",
     "jsonc-eslint-parser": "^2.1.0",
+    "monocart-coverage-reports": "^3.2.0",
     "ng-packagr": "~22.2.0",
     "nx": "24.0.3",
     "postcss": "^8.4.5",
@@ -53,9 +76,10 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.58.0",
     "verdaccio": "^6.3.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "wait-on": "^9.5.1"
   },
-  "packageManager": "pnpm@12.16.1",
+  "packageManager": "pnpm@12.16.1+sha512.091d1dee7927575661b25dab3c2ae31cafc1c54d6b71ed6a6600cf0c1cb10434a447eae14015f1b23e2e6bedeed79df94a932e2164d2832280dce3fb32f656d1",
   "nx": {
     "includedScripts": []
   }

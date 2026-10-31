@@ -7,8 +7,8 @@ const meta: Meta<Ui> = {
 };
 export default meta;
 
+/** A story of the placeholder component. */
 type Story = StoryObj<Ui>;
 
-export const Primary: Story = {
-  args: {},
-};
+/** The placeholder as generated, with no inputs. */
+export const Default: Story = {};

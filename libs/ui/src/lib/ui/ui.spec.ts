@@ -1,21 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Ui } from './ui';
+import { TestBed } from '@angular/core/testing';
+import { Ui } from '../../index';
 
 describe('Ui', () => {
-  let component: Ui;
-  let fixture: ComponentFixture<Ui>;
+  describe('rendering', () => {
+    it('renders the placeholder text', async () => {
+      const fixture = TestBed.createComponent(Ui);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Ui],
-    }).compileComponents();
+      await fixture.whenStable();
 
-    fixture = TestBed.createComponent(Ui);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+      const host = fixture.nativeElement as HTMLElement;
+      const text = host.querySelector('[data-testid="ui-placeholder"]');
+      expect(text?.textContent?.trim()).toBe('Ui works!');
+    });
   });
 });

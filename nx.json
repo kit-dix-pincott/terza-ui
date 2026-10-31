@@ -20,7 +20,30 @@
     },
     "@angular/build:unit-test": {
       "cache": true,
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "options": {
+        "coverage": true,
+        "coverageReporters": ["text-summary", "json", "lcov"],
+        "coverageInclude": ["{projectRoot}/src/**/*.ts"],
+        "coverageExclude": [
+          "**/main.ts",
+          "**/*.config.*",
+          "**/*.module.ts",
+          "**/migrations/**",
+          "**/api/generated/**",
+          "**/mocks/**",
+          "**/*.mock.ts",
+          "**/*.spec.ts",
+          "**/test/**",
+          "**/*.stories.ts"
+        ],
+        "coverageThresholds": {
+          "perFile": true,
+          "statements": 100,
+          "branches": 100,
+          "functions": 100
+        }
+      }
     },
     "@nx/angular:package": {
       "cache": true,
@@ -29,7 +52,30 @@
     },
     "@nx/angular:unit-test": {
       "cache": true,
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "options": {
+        "coverage": true,
+        "coverageReporters": ["text-summary", "json", "lcov"],
+        "coverageInclude": ["{projectRoot}/src/**/*.ts"],
+        "coverageExclude": [
+          "**/main.ts",
+          "**/*.config.*",
+          "**/*.module.ts",
+          "**/migrations/**",
+          "**/api/generated/**",
+          "**/mocks/**",
+          "**/*.mock.ts",
+          "**/*.spec.ts",
+          "**/test/**",
+          "**/*.stories.ts"
+        ],
+        "coverageThresholds": {
+          "perFile": true,
+          "statements": 100,
+          "branches": 100,
+          "functions": 100
+        }
+      }
     }
   },
   "plugins": [

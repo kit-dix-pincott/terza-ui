@@ -1,8 +1,26 @@
 {
   "name": "terza-ui",
   "version": "0.0.1",
+  "description": "terza-ui is an Angular component library that takes a third way: fully styled out of the box, yet themeable at every level through design tokens. Terza is Italian for \"third\".",
+  "license": "MIT",
+  "author": "Kit Dix-Pincott",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kit-dix-pincott/terza-ui.git",
+    "directory": "libs/ui"
+  },
+  "homepage": "https://github.com/kit-dix-pincott/terza-ui#readme",
+  "bugs": {
+    "url": "https://github.com/kit-dix-pincott/terza-ui/issues"
+  },
+  "keywords": [
+    "angular",
+    "components",
+    "ui",
+    "design-tokens",
+    "theming"
+  ],
   "peerDependencies": {
-    "@angular/common": "^22.2.0",
     "@angular/core": "^22.2.0"
   },
   "sideEffects": false
