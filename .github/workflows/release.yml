@@ -1,0 +1,103 @@
+# Release. A v* tag on the release branch publishes the terza-ui package to
+# npm (trusted publishing, no token) and then deploys the docs site to GitHub
+# Pages. workflow_dispatch on the release branch redeploys the docs only (a
+# docs fix without cutting a release).
+#
+# Tag rulesets cannot require "tag only on release", so the guard job
+# enforces it: the tagged commit must be on release, the tag must equal the
+# package version in libs/ui/package.json, and CHANGELOG.md must have that
+# version's heading.
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            [ "$GITHUB_REF" = "refs/heads/release" ] \
+              || { echo "::error::docs redeploy runs only on the release branch"; exit 1; }
+            exit 0
+          fi
+          git fetch origin release
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/release \
+            || { echo "::error::tag $GITHUB_REF_NAME is not on the release branch"; exit 1; }
+          V=$(node -p "require('./libs/ui/package.json').version")
+          [ "v$V" = "$GITHUB_REF_NAME" ] \
+            || { echo "::error::tag $GITHUB_REF_NAME != package version v$V"; exit 1; }
+          grep -q "^## \[$V\]" CHANGELOG.md \
+            || { echo "::error::CHANGELOG.md has no '## [$V]' heading"; exit 1; }
+
+  ci:
+    needs: guard
+    uses: ./.github/workflows/ci.yml
+
+  publish-npm:
+    if: github.event_name == 'push'
+    needs: [guard, ci]
+    runs-on: ubuntu-latest # trusted publishing needs a GitHub-hosted runner
+    permissions:
+      contents: read
+      id-token: write # OIDC for npm trusted publishing; provenance is automatic
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm nx build ui
+      # Trusted publishing is documented for the npm CLI >= 11.5.1; runner
+      # images may ship an older npm that fails with misleading token/E404
+      # errors. Authentication is OIDC only; no token is stored.
+      - run: npm install -g npm@latest
+      - run: npm publish dist/libs/ui --access public
+
+  deploy-docs:
+    if: >
+      always() && needs.guard.result == 'success' && needs.ci.result == 'success'
+      && (github.event_name == 'workflow_dispatch' || needs.publish-npm.result == 'success')
+    needs: [guard, ci, publish-npm]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Custom domain serves from the root, so base href is "/".
+      - run: pnpm nx build docs --base-href=/
+      # SPA fallback: Pages serves 404.html for unknown paths.
+      - run: cp dist/apps/docs/browser/index.html dist/apps/docs/browser/404.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/apps/docs/browser
+      - id: deployment
+        uses: actions/deploy-pages@v4

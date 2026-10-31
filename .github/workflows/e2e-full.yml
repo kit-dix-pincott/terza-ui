@@ -1,0 +1,69 @@
+# Full browser e2e. Runs nightly and on every push to main: all Playwright
+# projects (chromium, mobile-chromium, firefox, webkit), the flake log and the
+# merged unit + e2e coverage report. Not a required check.
+#
+# Skip-if-unchanged: a green run force-updates refs/e2e/last-full-green to
+# the SHA it proved. The scheduled run exits early when HEAD equals that
+# ref, and otherwise runs only projects affected since it.
+name: e2e-full
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write # to move refs/e2e/last-full-green
+
+jobs:
+  e2e-full:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: last
+        run: |
+          LAST=$(git ls-remote origin refs/e2e/last-full-green | cut -f1)
+          echo "sha=$LAST" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ] && [ "$LAST" = "$GITHUB_SHA" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "skipped: no changes since last full green ($LAST)" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: pnpm/action-setup@v4
+        if: steps.last.outputs.skip != 'true'
+      - uses: actions/setup-node@v4
+        if: steps.last.outputs.skip != 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: steps.last.outputs.skip != 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.last.outputs.skip != 'true'
+        run: pnpm exec playwright install --with-deps
+      - if: steps.last.outputs.skip != 'true'
+        run: pnpm nx run-many -t test
+      - if: steps.last.outputs.skip != 'true'
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ] && [ -n "${{ steps.last.outputs.sha }}" ]; then
+            pnpm nx affected -t e2e --base=${{ steps.last.outputs.sha }} --head=HEAD
+          else
+            pnpm nx run-many -t e2e
+          fi
+      - if: always() && steps.last.outputs.skip != 'true'
+        run: pnpm e2e:flake-log
+      - if: always() && steps.last.outputs.skip != 'true'
+        run: pnpm e2e:coverage-report
+      - if: success() && steps.last.outputs.skip != 'true'
+        run: git push --force origin "$GITHUB_SHA:refs/e2e/last-full-green"
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.last.outputs.skip != 'true'
+        with:
+          name: e2e-full
+          path: |
+            coverage/
+            reports/
+            apps/*-e2e/playwright-report/
+          if-no-files-found: ignore
