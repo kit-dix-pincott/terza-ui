@@ -48,6 +48,23 @@
           "tsConfig": "apps/docs/tsconfig.packaging.json",
           "outputPath": "dist/packaging/docs",
           "outputHashing": "all"
+        },
+        "e2e": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "sourceMap": true,
+          "outputPath": "dist/e2e/docs"
         }
       }
     },
@@ -85,6 +102,12 @@
         "port": 4200,
         "staticFilePath": "dist/apps/docs/browser",
         "spa": true
+      },
+      "configurations": {
+        "e2e": {
+          "buildTarget": "docs:build:e2e",
+          "staticFilePath": "dist/e2e/docs/browser"
+        }
       }
     }
   }

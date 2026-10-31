@@ -89,6 +89,19 @@
           "buildTarget": "ui:build-storybook:ci"
         }
       }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-storybook"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/.repo/manifest.json",
+        "{workspaceRoot}/tools/a11y/**/*"
+      ],
+      "options": {
+        "command": "concurrently --kill-others --success first --names serve,scan \"http-server dist/storybook/ui --port 6007 --silent\" \"wait-on --timeout 60000 http-get://127.0.0.1:6007/index.json && test-storybook --config-dir libs/ui/.storybook --url http://127.0.0.1:6007\""
+      }
     }
   }
 }

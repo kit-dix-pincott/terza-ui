@@ -19,7 +19,12 @@ export default [
         'error',
         {
           enforceBuildableLibDependency: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
+          allow: [
+            '^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$',
+            // Repo tooling shared by the e2e fixtures and the Storybook axe
+            // runner: reads the accessibility levels from the manifest.
+            '^.*/tools/a11y/conformance$',
+          ],
           depConstraints: [
             {
               sourceTag: 'scope:ui',

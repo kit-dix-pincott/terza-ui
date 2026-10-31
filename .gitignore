@@ -50,3 +50,9 @@ __screenshots__/
 
 
 storybook-static
+# test and report output
+/reports
+/dist
+apps/*-e2e/test-results
+apps/*-e2e/playwright-report
+*.tgz

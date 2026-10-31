@@ -1,0 +1,33 @@
+{
+  "type": "angular-ui-library",
+  "architectureVersion": 1,
+  "owner": "personal",
+  "created": "2026-10-31",
+  "license": "MIT",
+  "packageManager": "pnpm",
+  "workspace": "nx",
+  "features": {
+    "storybook": true,
+    "docsApp": true,
+    "mcpServer": false
+  },
+  "apps": ["docs"],
+  "a11y": {
+    "gate": "AA",
+    "target": "AAA"
+  },
+  "publish": {
+    "registry": "npmjs",
+    "scope": null,
+    "package": "terza-ui"
+  },
+  "deploy": {
+    "platform": "github-pages",
+    "domain": "docs.terza.dev"
+  },
+  "toolchain": {
+    "node": "26",
+    "nx": "24",
+    "angular": "22"
+  }
+}
