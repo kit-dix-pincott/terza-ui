@@ -5,7 +5,7 @@ purchases. These steps need your hand, once.
 
 - [ ] **Claim the npm name**: build the package and publish a placeholder
       version by hand from your machine (`0.0.1`, `npm publish <dist dir> --access
-    public`, with 2FA). npm only lets a trusted publisher be added to a package
+      public`, with 2FA). npm only lets a trusted publisher be added to a package
       that already exists, so CI cannot do the first publish. Use a version below
       the first tagged release (e.g. `0.1.0`), because npm never accepts the same
       version twice. For this repository: `pnpm nx build ui`, then
@@ -23,7 +23,10 @@ purchases. These steps need your hand, once.
       record for the docs host pointing to `kit-dix-pincott.github.io`; verify the
       domain under your GitHub account (Settings → Pages → Verified domains);
       then set it as the repo's Pages custom domain and tick "Enforce HTTPS"
-      once the certificate is issued.
+      once the certificate is issued. **Do this before the first release or
+      any docs redeploy.** The docs are built for the site root (base href
+      `/`). Until the custom domain is set, Pages serves the site at
+      `kit-dix-pincott.github.io/terza-ui/`, where every asset path breaks.
 - [ ] **First release**: update `CHANGELOG.md`, bump the version, open a PR
       from `main` into `release`, merge, then tag `v<version>` on `release`. The
       release workflow publishes to npm and deploys the docs.
