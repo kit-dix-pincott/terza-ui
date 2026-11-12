@@ -19,11 +19,11 @@ _Avoid_: style hooks, CSS API, overrides
 ### Themes
 
 **Theme**:
-A complete set of design-token values that gives the components one consistent look.
+A set of design-token values, covering at least every required token, that gives the components one consistent look.
 _Avoid_: skin, palette, style
 
 **Skeleton theme**:
-The theme that holds the minimal set of design tokens needed to theme the library, annotated for theme authors. It is the starting point for a new theme.
+The working theme that sets only the required design tokens, with plain values, annotated for theme authors. It is the starting point for a new theme.
 _Avoid_: base theme, starter theme, template
 
 **Default theme**:

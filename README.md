@@ -61,8 +61,7 @@ into your project and then own.
 | terza-ui                       | The library                 | Yours                                  |
 
 terza-ui starts from a skeleton theme that carries no design language. The
-default look is one theme built on it, and a team's own design system is
-another.
+default look is one theme, and a team's own design system is another.
 
 There is a limit. A component's markup, structure and behaviour are fixed. A
 design system that needs a component to have a different structure is outside
@@ -109,11 +108,11 @@ button {
 
 Three themes are planned:
 
-| Theme         | Purpose                                                                                                                               |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Skeleton      | The minimal set of tokens needed to theme the library, with comments on how to style each part. Copy it to start a theme of your own. |
-| Default       | The library's standard look.                                                                                                          |
-| High contrast | A look for people with low vision.                                                                                                    |
+| Theme         | Purpose                                                                                                                                             |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Skeleton      | A working theme that sets only the required tokens, with plain values and comments on how to style each part. Copy it to start a theme of your own. |
+| Default       | The library's standard look.                                                                                                                        |
+| High contrast | A look for people with low vision.                                                                                                                  |
 
 The library's own styles are written in SCSS. What it publishes is plain CSS:
 nobody needs Sass to write a theme or to use a component.
