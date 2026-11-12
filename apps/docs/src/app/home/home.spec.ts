@@ -19,7 +19,7 @@ describe('Home', () => {
 
       const host = fixture.nativeElement as HTMLElement;
       const pitch = host.querySelector('[data-testid="pitch"]');
-      expect(pitch?.textContent).toContain('takes a third way');
+      expect(pitch?.textContent).toContain('finished, accessible components');
     });
 
     it('renders the library placeholder component as a live example', async () => {
