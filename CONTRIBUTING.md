@@ -1,5 +1,10 @@
 # Contributing to terza-ui
 
+terza-ui is in its early phases: the pipeline exists and the first components
+are still to come. Ideas and questions about the design are welcome as
+[GitHub issues](https://github.com/kit-dix-pincott/terza-ui/issues). The
+[roadmap](docs/roadmap.md) shows what is planned.
+
 ## Setup
 
 See the Development section of the [README](README.md). Use the Node version
@@ -32,10 +37,12 @@ in `.nvmrc` and the pnpm version pinned in `package.json` (`packageManager`).
   `it('renders the label when one is given')`.
 - **Component tests** render the real template and assert what a user sees
   in the DOM, using `data-testid` selectors.
-- **Components** use the `tz` selector prefix and expose their theming as CSS
-  custom properties with the `--tz-` prefix. Each new component adds a
-  Storybook story, a documentation page in `docs/` (listed in `llms.txt`), a
-  docs-site example and a conformance entry in
+- **Components** use the `tz` selector prefix, read their values from design
+  tokens prefixed `--tz-`, and expose a component style API as CSS custom
+  properties on the host element. The naming of style API variables is not
+  yet settled; phase 1 of the [roadmap](docs/roadmap.md) decides it. Each new
+  component adds a Storybook story, a documentation page in `docs/` (listed
+  in `llms.txt`), a docs-site example and a conformance entry in
   `apps/docs-e2e/journeys/components/` in the same pull request.
 - **Accessibility:** WCAG 2.2 AA is the gate and AAA is the target; both levels
   are set in `.repo/manifest.json`. Gate-level axe violations fail CI, in

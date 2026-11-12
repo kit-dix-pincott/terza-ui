@@ -12,7 +12,9 @@ test.describe('docs.landing', () => {
       await expect(
         page.getByRole('heading', { level: 1, name: 'terza-ui' }),
       ).toBeVisible();
-      await expect(page.getByText('takes a third way')).toBeVisible();
+      await expect(
+        page.getByText('finished, accessible components'),
+      ).toBeVisible();
     },
   );
 });

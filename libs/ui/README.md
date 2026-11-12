@@ -1,8 +1,8 @@
 # terza-ui
 
-terza-ui is an Angular component library that takes a third way: fully styled
-out of the box, yet themeable at every level through design tokens. _Terza_ is
-Italian for "third".
+terza-ui is an Angular component library of finished, accessible components
+that take on the look of your design system through a documented style API and
+themes written in plain CSS.
 
 > Early development: the package contains only a placeholder component.
 
@@ -10,8 +10,8 @@ Italian for "third".
 pnpm add terza-ui
 ```
 
-Requires Angular 22. Components are standalone, use the `tz` selector prefix,
-and are themed through CSS custom properties prefixed `--tz-`.
+Requires Angular 22. Components are standalone and use the `tz` selector
+prefix. Design tokens are CSS custom properties prefixed `--tz-`.
 
 Source, documentation and issues: https://github.com/kit-dix-pincott/terza-ui
 
