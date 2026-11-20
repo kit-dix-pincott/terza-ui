@@ -1,7 +1,7 @@
 {
   "name": "terza-ui",
   "version": "0.0.1",
-  "description": "terza-ui is an Angular component library that takes a third way: fully styled out of the box, yet themeable at every level through design tokens. Terza is Italian for \"third\".",
+  "description": "terza-ui is an Angular component library of finished, accessible components that take on the look of your design system through a documented style API and themes written in plain CSS.",
   "license": "MIT",
   "author": "Kit Dix-Pincott",
   "repository": {

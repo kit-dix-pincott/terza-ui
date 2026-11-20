@@ -11,3 +11,9 @@ adds its entry under **Unreleased**; a release moves those entries under a new
 
 - Initial repository scaffold: the `terza-ui` library with a placeholder
   `tz-ui` component, Storybook, the documentation site and its e2e smoke test.
+
+### Changed
+
+- The package description and README now describe the library as finished,
+  accessible components themed through a documented style API and plain CSS
+  themes.

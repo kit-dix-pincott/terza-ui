@@ -2,6 +2,8 @@
 
 **Date:** 2026-10-30
 
+**Status:** superseded by ADR-0005
+
 Angular component libraries tend to fall into two camps. Some are opinionated kits with a heavy built-in style. Others are headless primitives that the consumer styles from scratch. terza-ui takes a third position between them. Its components are fully styled out of the box, and every level of that styling can be themed through design tokens. The name says this: *terza* is Italian for "third".
 
 ## Consequences
